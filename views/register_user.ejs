@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BSIT Fund Collection Management System</title>
+  <link rel="stylesheet" href="register_user.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+        <img src="/BSIT_LOGO.png" alt="Logo">
+        <span class="BS">BSIT FUND COLLECTION<br><span class="IT"> MANAGEMENT SYSTEM</span></span>
+    </div>
+    <nav class="nav">
+        <a href="dashboard">DASHBOARD</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn" onclick="toggleDropdown('remittanceDropdown')">REMITTANCE</a>
+            <span class="arrow" onclick="toggleDropdown('remittanceDropdown')"></span>
+            <div class="dropdown-content" id="remittanceDropdown">
+                <a href="#">BSIT-3A</a>
+                <a href="#">BSIT-3B</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="dropbtn" onclick="toggleDropdown('reportDropdown')">REPORT</a>
+            <span class="arrow" onclick="toggleDropdown('reportDropdown')"></span>
+            <div class="dropdown-content" id="reportDropdown">
+                <a href="#">MONTHLY REPORT</a>
+                <a href="#">EXPENSES</a>
+            </div>
+        </div>
+        <a href="register_user">REGISTER</a>
+        <img src="path/to/your/user-icon.png" alt="User Icon" class="user-icon">
+    </nav>
+</header>
+
+  <div class="register-form-container">
+    <form method="post" action="register_user_by_role" class="register-form">
+      <h2 class="register">Register</h2>
+      <input name="userId" type="integer" placeholder="ID NUMBER" required>
+      <input name="lastName" type="text" placeholder="LASTNAME" required>
+      <input name="firstName" type="text" placeholder="FIRSTNAME" required>
+
+      <div class="select-group">
+        <select name="yearLevel" required>
+          <option value="" disabled selected>YEAR LEVEL</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+        </select>
+        <select name="block" required>
+          <option value="" disabled selected>BLOCK</option>
+          <option value="A">Block A</option>
+          <option value="B">Block B</option>
+        </select>
+      </div>
+
+      <div class="gender">
+        <label>GENDER:</label>
+        <label><input type="radio" name="gender" value="male" required> MALE</label>
+        <label><input type="radio" name="gender" value="female" required> FEMALE</label>
+      </div>
+
+      <select name="role" required>
+        <option value="" disabled selected>ROLE</option>
+        <option value="student">Admin</option>
+        <option value="faculty">Tresurer</option>
+      </select>
+
+      <input name="userName" type="text" placeholder="USERNAME" required>
+      <input name="password" type="password" placeholder="PASSWORD" required>
+
+      <button type="submit">REGISTER</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleDropdown(dropdownId) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].id !== dropdownId) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle('show');
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn') && !event.target.matches('.arrow')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Users</title>
+    <link rel="stylesheet" href="/TREASURER/registered_users.css"> 
+</head>
+<body>
+    <header>
+        <h1>Registered Users</h1>
+        <a href="/Treasurer_register_user">Back to Registration</a>
+    </header>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Number</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Year Level</th>
+                <th>Block</th>
+                <th>Gender</th>
+                <th>Role</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.userId %></td>
+                    <td><%= user.lastName %></td>
+                    <td><%= user.firstName %></td>
+                    <td><%= user.yearLevel %></td>
+                    <td><%= user.block %></td>
+                    <td><%= user.gender %></td>
+                    <td><%= user.role %></td>
+                    <td><%= user.userName %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

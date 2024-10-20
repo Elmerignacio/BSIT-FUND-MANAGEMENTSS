@@ -1,17 +1,18 @@
-  body {
+body {
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
 }
+
 
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #f8f8f8;
+  background-color: #ffffff;
   padding: 10px;
   border-bottom: 2px solid green;
 }
@@ -89,8 +90,10 @@ header {
 }
 
 .user-icon {
-  height: 40px;
-  border-radius: 50%;
+  height: 40px; 
+  border-radius: 50%; 
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .register-form-container {
@@ -99,8 +102,10 @@ header {
   border-radius: 10px;
   width: 460px;
   margin: 60px auto;
-  box-shadow: 2 7px 8px rgba(0, 0, 0, 0.1);
   margin-top: 100px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .register-form {
@@ -155,3 +160,17 @@ button:hover {
  .register {
   margin-top: 0;
  }
+
+
+
+ @keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+

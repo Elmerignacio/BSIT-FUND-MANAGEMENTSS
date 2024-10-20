@@ -1,0 +1,175 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f8f8; 
+  padding: 10px; 
+  border-bottom: 2px solid green; 
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width:150px; 
+  height: 100px; 
+}
+
+.logo span {
+  font-size: 20px; 
+  font-weight: bold; 
+  color: rgb(0, 0, 0); 
+  text-align: left; 
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: green;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: background-color 0.3s; 
+}
+
+.nav a:hover {
+  background-color: #d1e7dd; 
+  border-radius: 5px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none; 
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1; 
+}
+
+.show {
+  display: block; 
+}
+
+.user-icon {
+  height: 40px; 
+  border-radius: 50%; 
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.container {
+  background-color: #d7edd7;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  margin: 60px auto;
+  margin-top: 80px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.info h2 {
+  color: #3d7643;
+  margin-bottom: 10px;
+}
+
+.info p {
+  margin: 5px 0;
+}
+
+.table-wrapper {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 5px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+thead th {
+  background-color: #90c290;
+  color: white;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+tfoot td {
+  font-weight: bold;
+  background-color: #e2e2e2;
+}
+
+.total-amount {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.verify-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.verify-button button {
+  padding: 10px 20px;
+  background-color: #3d7643;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.verify-button button:hover {
+  background-color: #285f2e;
+}
+
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+

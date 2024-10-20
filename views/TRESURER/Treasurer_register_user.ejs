@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BSIT Fund Collection Management System</title>
-  <link rel="stylesheet" href="register_user.css">
+  <link rel="stylesheet" href="TREASURER/Treasurer_register_user.css">
 </head>
 <body>
   <header>
@@ -13,12 +13,13 @@
         <span class="BS">BSIT FUND COLLECTION<br><span class="IT"> MANAGEMENT SYSTEM</span></span>
     </div>
     <nav class="nav">
-        <a href="dashboard">DASHBOARD</a>
+        <a href="Treasurer_dashboard">DASHBOARD</a>
+        <a href="Treasurer_create_payable">PAYABLE</a>
         <div class="dropdown">
             <a href="#" class="dropbtn" onclick="toggleDropdown('remittanceDropdown')">REMITTANCE</a>
             <span class="arrow" onclick="toggleDropdown('remittanceDropdown')"></span>
             <div class="dropdown-content" id="remittanceDropdown">
-                <a href="#">BSIT-3A</a>
+                <a href="Treasurer_remittance">BSIT-3A</a>
                 <a href="#">BSIT-3B</a>
             </div>
         </div>
@@ -30,8 +31,8 @@
                 <a href="#">EXPENSES</a>
             </div>
         </div>
-        <a href="register_user">REGISTER</a>
-        <img src="path/to/your/user-icon.png" alt="User Icon" class="user-icon">
+        <a href="Treasurer_register_user">REGISTER</a>
+        <img src="/user.jpg" alt="User Icon" class="user-icon">
     </nav>
 </header>
 
@@ -62,15 +63,16 @@
         <label><input type="radio" name="gender" value="male" required> MALE</label>
         <label><input type="radio" name="gender" value="female" required> FEMALE</label>
       </div>
-
-      <select name="role" required>
+      
+      <select name="role" id="role" required onchange="toggleAccess()">
         <option value="" disabled selected>ROLE</option>
-        <option value="student">Admin</option>
-        <option value="faculty">Tresurer</option>
+        <option value="admin">Admin</option>
+        <option value="treasurer">Treasurer</option>
+        <option value="student">Student</option>
       </select>
 
-      <input name="userName" type="text" placeholder="USERNAME" required>
-      <input name="password" type="password" placeholder="PASSWORD" required>
+      <input name="userName" type="text" id="username" placeholder="USERNAME" required>
+      <input name="password" type="password" id="password" placeholder="PASSWORD" required>
 
       <button type="submit">REGISTER</button>
     </form>
@@ -97,6 +99,22 @@
                     openDropdown.classList.remove('show');
                 }
             }
+        }
+    }
+
+    function toggleAccess() {
+        const role = document.getElementById('role').value;
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+
+        if (role === 'student') {
+            username.disabled = true;
+            password.disabled = true;
+            username.value = ''; 
+            password.value = ''; 
+        } else {
+            username.disabled = false;
+            password.disabled = false;
         }
     }
 </script>

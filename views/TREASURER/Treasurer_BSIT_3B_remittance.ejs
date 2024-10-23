@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasurer_remittance</title>
+    <link rel="stylesheet" href="/TREASURER/Treasurer_remmitance.css"> 
+</head>
+<body>
+    <header>
+        <h1>Treasurer Remittance</h1>
+        <a href="/Treasurer_register_user">Back to Registration</a>
+    </header>
+
+    <div class="container">
+      <p><strong><%= blockKey %></strong></p>
+      
+      <% representativeNames.forEach(name => { %>
+        <p><strong>Representative:</strong> <%= name %></p>
+      <% }); %>
+    
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Payable</th>
+            <th>Amount Paid</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% filteredUsers.forEach(user => { %>
+            <tr>
+              <td><%= user.firstName %> <%= user.lastName %></td>
+              
+              <% const payable = payables.find(p => p.userId === user.id); %>
+              <% if (payable) { %>
+                <td><%= payable.description %></td>
+                <td><%= payable.amount %></td>
+                <td><%= payable.amount - (user.amountPaid || 0) %></td>
+              <% } else { %>
+                <td colspan="3">No payable information available</td>
+              <% } %>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    
+    
+</body>
+</html>

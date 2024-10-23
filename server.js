@@ -8,8 +8,9 @@ const app =  express()
 app.use(express.urlencoded({extended: true}));
 
 app.set('views',[
+  path.join(__dirname, 'views'),
   path.join(__dirname, 'views', 'ADMIN'),
-  path.join(__dirname, 'views', 'TRESURER')
+  path.join(__dirname, 'views', 'TREASURER')
 ]);
 
 

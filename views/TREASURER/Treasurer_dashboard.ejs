@@ -21,9 +21,13 @@
             <a href="#" class="dropbtn" onclick="toggleDropdown('remittanceDropdown')">REMITTANCE</a>
             <span class="arrow" onclick="toggleDropdown('remittanceDropdown')"></span>
             <div class="dropdown-content" id="remittanceDropdown">
-                <a href="Treasurer_remittance">BSIT-3A</a>
-                <a href="#">BSIT-3B</a>
+                <a href="Treasurer_BSIT_3A_remittance">BSIT-3A</a>
+                <a href="Treasurer_BSIT_3B_remittance">BSIT-3B</a>
+
             </div>
+        </div>
+        
+          
 
         </div>
         <div class="dropdown">
@@ -59,6 +63,7 @@
     </div>
 
     <script>
+    
         function toggleDropdown(dropdownId) {
             const dropdowns = document.getElementsByClassName("dropdown-content");
             for (let i = 0; i < dropdowns.length; i++) {

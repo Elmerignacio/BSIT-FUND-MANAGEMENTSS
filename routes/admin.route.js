@@ -12,10 +12,17 @@ route.post('/register_user_by_role', admin_controller.register_user_by_role)
 
 route.get('/Treasurer_create_payable', admin_controller.Treasurer_create_payable)
 route.get('/Treasurer_dashboard', admin_controller.Treasurer_dashboard)
-route.get('/Treasurer_register_user', admin_controller.Treasurer_register_user )
-route.get('/registered_users', admin_controller.getAllRegisteredUsers)
-route.get('/Treasurer_remittance', admin_controller.Treasurer_remittance)
-route.get('/DisplaySpecificData', admin_controller.getAllRegisteredUsers)
+route.get('/Treasurer_register_user', admin_controller.Treasurer_register_user)
+
+route.get('/Treasurer_BSIT_3A_remittance',admin_controller.Display_BSIT_3A)
+route.get('/Treasurer_BSIT_3B_remittance',admin_controller.Display_BSIT_3B)
+
+
+
+
+
+
+
 
 
 

@@ -8,8 +8,39 @@
 </head>
 <body>
     <header>
-        <h1>Treasurer Remittance</h1>
-        <a href="/Treasurer_register_user">Back to Registration</a>
+        <div class="logo">
+            <img src="/BSIT_LOGO.png" alt="Logo">
+            <span class="BS">BSIT FUND COLLECTION<br><span class="IT"> MANAGEMENT SYSTEM</span></span>
+        </div>
+        <nav class="nav">
+            <a href="Treasurer_dashboard">DASHBOARD</a>
+    
+            <a href="Treasurer_create_payable">PAYABLE</a>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn" onclick="toggleDropdown('remittanceDropdown')">REMITTANCE</a>
+                <span class="arrow" onclick="toggleDropdown('remittanceDropdown')"></span>
+                <div class="dropdown-content" id="remittanceDropdown">
+                    <a href="Treasurer_BSIT_3A_remittance">BSIT-3A</a>
+                    <a href="Treasurer_BSIT_3B_remittance">BSIT-3B</a>
+    
+                </div>
+            </div>
+            
+              
+    
+            </div>
+            <div class="dropdown">
+                <a href="#" class="dropbtn" onclick="toggleDropdown('reportDropdown')">REPORT</a>
+                <span class="arrow" onclick="toggleDropdown('reportDropdown')"></span>
+                <div class="dropdown-content" id="reportDropdown">
+                    <a href="#">MONTHLY REPORT</a>
+                    <a href="#">EXPENSES</a>
+                </div>
+            </div>
+            <a href="Treasurer_register_user">REGISTER</a>
+            <img src="/user.jpg" alt="User Icon" class="user-icon">
+        </nav>
     </header>
 
     <div class="container">
@@ -18,7 +49,7 @@
       <% representativeNames.forEach(name => { %>
         <p><strong>Representative:</strong> <%= name %></p>
       <% }); %>
-    
+      
       <table>
         <thead>
           <tr>
@@ -32,20 +63,48 @@
           <% filteredUsers.forEach(user => { %>
             <tr>
               <td><%= user.firstName %> <%= user.lastName %></td>
-              
-              <% const payable = payables.find(p => p.userId === user.id); %>
+              <% 
+                // Find the payable related to the current user
+                const payable = payables.find(p => p.student === `${user.firstName} ${user.lastName}`);
+              %>
               <% if (payable) { %>
-                <td><%= payable.description %></td>
-                <td><%= payable.amount %></td>
-                <td><%= payable.amount - (user.amountPaid || 0) %></td>
+                <td><%= payable.description %></td> 
+                <td><%= payable.amountPaid || 0 %></td>
+                <td><%= (payable.amount || 0) - (payable.amountPaid || 0) %></td> 
               <% } else { %>
-                <td colspan="3">No payable information available</td>
+                <td colspan="3">No payable information available</td> 
               <% } %>
             </tr>
           <% }); %>
         </tbody>
       </table>
     </div>
+
+    <script>
+          function toggleDropdown(dropdownId) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].id !== dropdownId) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle('show');
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn') && !event.target.matches('.arrow')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    </script>
     
     
 </body>

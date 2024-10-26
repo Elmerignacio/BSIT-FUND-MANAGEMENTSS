@@ -14,30 +14,61 @@ const Admin_register_user = (req, res) => {
   res.render('Admin_register_user')
 };
 
-const create_payable = (req, res) => {
+const student = (req, res) => {
+  const { yearLevel, block } = req.query;
 
-  const payable_post_db = {
-    yearLevel : req.body.yearLevel,
-    block : req.body.block,
-    student: req.body.student,
-    description : req.body.description,
-    amount : req.body.amount,
- 
-  }
-  
-  model.payable.create(payable_post_db).then (result => {
-    res.status(200)
-    res.render("Treasurer_create_payable", {message: "Data have been save!"})
-  }).catch(error => {
-   res.status(500)
-   res.render("Treasurer_register_user", {message: "Something wet wrong pls try again!!"})
-   
+  model.register_user.findAll({
+      where: {
+          yearLevel: yearLevel,
+          block: block,
+          role: ['student', 'representative']
+      }
   })
-  };
+  .then(students => {
+      res.json({ students });
+  })
+  .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: 'Unable to fetch students.' });
+  });
+};
 
-  
-  const register_user_by_role = (req, res) => {
-    const register_post_db = {
+const create_payable = (req, res) => {
+  const { yearLevel, block, description, amount } = req.body;
+
+  model.register_user.findAll({
+      where: {
+          yearLevel: yearLevel,
+          block: block,
+          role: ['student', 'representative'] 
+      }
+  })
+  .then(students => {
+      if (students.length === 0) {
+          return res.status(404).render("error", { message: "No students found for the selected year and block." });
+      }
+      const payables = students.map(student => ({
+          yearLevel: yearLevel,
+          block: block,
+          student: `${student.firstName} ${student.lastName}`,
+          description: description,
+          amount: amount,
+      }));
+
+      return model.payable.bulkCreate(payables);
+  })
+  .then(() => {
+      res.redirect('/Treasurer_create_payable');
+  })
+  .catch(error => {
+      console.error(error);
+      res.status(500).render("error", { message: "Unable to create payables." });
+  });
+};
+
+
+const register_user_by_role = (req, res) => {
+  const register_post_db = {
       userId: req.body.userId,
       lastName: req.body.lastName,
       firstName: req.body.firstName,
@@ -47,28 +78,25 @@ const create_payable = (req, res) => {
       role: req.body.role,
       userName: req.body.userName,
       password: req.body.password, 
-    };
-  
-
-    model.register_user.findOne({ where: { userId: register_post_db.userId } })
-      .then(existingUser => {
-        if (existingUser) {
-          res.status(400).render("Treasurer_register_user", {
-            message: "User ID already exists. Please use a different ID.",
-          });
-        } else {
-          model.register_user.create(register_post_db)
-            .then(result => {
-              res.status(200).render("Treasurer_register_user", { message: "Data has been saved!" });
-            })
-            .catch(error => {
-              res.status(500).render("Treasurer_register_user", { message: "Something went wrong, please try again!" });
-            });
-        }
-      })
-
   };
 
+  model.register_user.findOne({ where: { userId: register_post_db.userId } })
+  .then(existingUser => {
+      if (existingUser) {
+          res.status(400).render("Treasurer_register_user", {
+              message: "User ID already exists. Please use a different ID.",
+          });
+      } else {
+          model.register_user.create(register_post_db)
+          .then(result => {
+              res.status(200).render("Treasurer_register_user", { message: "Data has been saved!" });
+          })
+          .catch(error => {
+              res.status(500).render("Treasurer_register_user", { message: "Something went wrong, please try again!" });
+          });
+      }
+  });
+};
 
 
 
@@ -103,11 +131,16 @@ const Display_BSIT_3A = (req, res) => {
       .filter(user => user.role === 'representative')
       .map(representative => `${representative.firstName} ${representative.lastName}`);
 
+    const filteredPayables = payables.filter(payable => 
+      payable.yearLevel === '3' && 
+      payable.block === 'A'
+    );
+
     res.render("Treasurer_BSIT_3A_remittance", { 
       blockKey: 'BSIT - 3A',
       representativeNames,
       filteredUsers,
-      payables 
+      payables: filteredPayables 
     });
   })
   .catch(error => {
@@ -153,6 +186,7 @@ module.exports = {
   login,
   Admin_dashboard,
   Admin_register_user,
+  student,
   create_payable,
   register_user_by_role,
   Treasurer_create_payable,

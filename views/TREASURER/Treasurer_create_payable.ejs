@@ -40,31 +40,26 @@
 <div class="register-form-container">
     <form method="post" action="create_payable" class="register-form">
         <h2 class="register">Create Payable</h2>
-
-       
-            <select name="yearLevel" required>
-                <option value="" disabled selected>YEAR LEVEL</option>
-                <option value="3">3rd Year</option>
-            </select>
-
-            <select name="block" required>
-                <option value="" disabled selected>BLOCK</option>
-                <option value="A">Block A</option>
-                <option value="B">Block B</option>
-            </select>
-            
-            <select name="student" required>
-                <option value="" disabled selected>NAME</option>
-                <option value="A">STUDENT NA GI ADD SA REPRESENTATIVE</option>
-            </select>
-                  
-     
+    
+        <select name="yearLevel" id="yearLevel" required>
+            <option value="" disabled selected>YEAR LEVEL</option>
+            <option value="3">3rd Year</option>
+        </select>
+    
+        <select name="block" id="block" required>
+            <option value="" disabled selected>BLOCK</option>
+            <option value="A">Block A</option>
+            <option value="B">Block B</option>
+        </select>
+        
+        <select name="student" id="student" required>
+            <option value="" disabled selected>NAME</option>
+            <option value="all">All Students</option> 
+        </select>
+    
         <input name="description" type="text" placeholder="DESCRIPTION" required>
         <input name="amount" type="number" placeholder="AMOUNT" required>
-
-      
-
-     
+    
         <button type="submit">CREATE PAYABLE</button>
     </form>
 </div>
@@ -92,6 +87,60 @@
             }
         }
     }
+
+    document.getElementById('yearLevel').addEventListener('change', updateStudents);
+    document.getElementById('block').addEventListener('change', updateStudents);
+
+    function updateStudents() {
+        const yearLevel = document.getElementById('yearLevel').value;
+        const block = document.getElementById('block').value;
+        const studentSelect = document.getElementById('student');
+
+    
+        studentSelect.innerHTML = '<option value="" disabled selected>NAME</option>';
+
+        if (yearLevel && block) {
+            fetch(`/students?yearLevel=${yearLevel}&block=${block}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.students.forEach(student => {
+                        const option = document.createElement('option');
+                        option.value = [student.firstName, student.lastName];
+                        option.textContent = `${student.firstName} ${student.lastName}`;
+                        studentSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching students:', error);
+                });
+        }
+    }
+
+    function updateStudents() {
+    const yearLevel = document.getElementById('yearLevel').value;
+    const block = document.getElementById('block').value;
+    const studentSelect = document.getElementById('student');
+
+
+    studentSelect.innerHTML = '<option value="" disabled selected>NAME</option>';
+    studentSelect.innerHTML += '<option value="all">All Students</option>'; 
+
+    if (yearLevel && block) {
+        fetch(`/students?yearLevel=${yearLevel}&block=${block}`)
+            .then(response => response.json())
+            .then(data => {
+                data.students.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = [student.firstName, student.lastName].join(' ');
+                    option.textContent = `${student.firstName} ${student.lastName}`;
+                    studentSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching students:', error);
+            });
+    }
+}
 </script>
 
 </body>

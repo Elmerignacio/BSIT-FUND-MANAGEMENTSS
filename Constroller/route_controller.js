@@ -38,7 +38,7 @@ const create_payable = (req, res) => {
 
   model.register_user.findAll({
       where: {
-          yearLevel: yearLevel,
+          yearLevel: yearLevel,     
           block: block,
           role: ['student', 'representative'] 
       }
@@ -55,10 +55,10 @@ const create_payable = (req, res) => {
           amount: amount,
       }));
 
-      return model.payable.bulkCreate(payables);
-  })
-  .then(() => {
-      res.redirect('/Treasurer_create_payable');
+      return model.payable.bulkCreate(payables)
+          .then(() => {
+              res.render('Treasurer_create_payable', { message: "Payables created successfully!" });
+          });
   })
   .catch(error => {
       console.error(error);
@@ -76,26 +76,53 @@ const register_user_by_role = (req, res) => {
       block: req.body.block,
       gender: req.body.gender,
       role: req.body.role,
-      userName: req.body.userName,
-      password: req.body.password, 
+      userName: req.body.userName, 
+      password: req.body.password,
+  };
+
+  console.log("Register Data:", register_post_db);
+
+  const handleError = (message, status = 500) => {
+      console.error(message);
+      return res.status(status).render("Treasurer_register_user", { message: "Something went wrong, please try again!" });
   };
 
   model.register_user.findOne({ where: { userId: register_post_db.userId } })
-  .then(existingUser => {
-      if (existingUser) {
-          res.status(400).render("Treasurer_register_user", {
-              message: "User ID already exists. Please use a different ID.",
-          });
-      } else {
-          model.register_user.create(register_post_db)
-          .then(result => {
-              res.status(200).render("Treasurer_register_user", { message: "Data has been saved!" });
-          })
-          .catch(error => {
-              res.status(500).render("Treasurer_register_user", { message: "Something went wrong, please try again!" });
-          });
-      }
-  });
+      .then(existingUser => {
+          if (existingUser) {
+              return res.status(400).render("Treasurer_register_user", {
+                  message: "User ID already exists. Please use a different ID.",
+              });
+          }
+
+          if (register_post_db.role === "representative") {
+              return model.register_user.findOne({
+                  where: { yearLevel: register_post_db.yearLevel, block: register_post_db.block, role: "representative" }
+              })
+              .then(existingRepresentative => {
+                  if (existingRepresentative) {
+                      return res.status(400).render("Treasurer_register_user", {
+                          message: `A representative for Year ${register_post_db.yearLevel} and Block ${register_post_db.block} already exists.`
+                      });
+                  } 
+                  return createUser(register_post_db, res);
+              })
+              .catch(() => handleError("Representative Check Error:"));
+          } 
+
+          return createUser(register_post_db, res);
+      })
+      .catch(() => handleError("User ID Check Error:"));
+};
+const createUser = (register_post_db, res) => {
+  return model.register_user.create(register_post_db)
+      .then(() => {
+          res.status(200).render("Treasurer_register_user", { message: "Registration successful!" });
+      })
+      .catch(error => {
+          console.error("Database Insert Error:", error);
+          res.status(500).render("Treasurer_register_user", { message: "Something went wrong, please try again!" });
+      });
 };
 
 

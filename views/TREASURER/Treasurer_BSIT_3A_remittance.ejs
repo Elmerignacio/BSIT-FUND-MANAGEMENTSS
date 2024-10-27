@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treasurer_remittance</title>
-    <link rel="stylesheet" href="/TREASURER/Treasurer_remmitance.css"> 
+    <link rel="stylesheet" href="/TREASURER_CSS/Treasurer_remmitance.css"> 
 </head>
 <body>
     <header>
@@ -64,7 +64,6 @@
             <tr>
               <td><%= user.firstName %> <%= user.lastName %></td>
               <% 
-                // Find the payable related to the current user
                 const payable = payables.find(p => p.student === `${user.firstName} ${user.lastName}`);
               %>
               <% if (payable) { %>
@@ -80,31 +79,8 @@
       </table>
     </div>
 
-    <script>
-          function toggleDropdown(dropdownId) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            if (dropdowns[i].id !== dropdownId) {
-                dropdowns[i].classList.remove('show');
-            }
-        }
-        const dropdown = document.getElementById(dropdownId);
-        dropdown.classList.toggle('show');
-    }
+    <script src="/TREASURER_JS/Treasurer_BSIT_3A_remittance.js"></script>
 
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn') && !event.target.matches('.arrow')) {
-            const dropdowns = document.getElementsByClassName("dropdown-content");
-            for (let i = 0; i < dropdowns.length; i++) {
-                const openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-
-    </script>
     
     
 </body>
